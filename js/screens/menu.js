@@ -21,7 +21,6 @@ App.screens.menu = (function () {
       return { icone: p.icone || "🥊", nome: p.nome, desc: linhas.join("<br>"), acao: "preset", ref: p };
     });
     cards.push({ icone: "📺", nome: "Galeria", desc: "Patrocinadores<br>e campeonatos", acao: "gallery" });
-    cards.push({ icone: "🛠️", nome: "Diagnóstico", desc: "Testar teclas<br>do controle", acao: "diag" });
   }
 
   function render() {
@@ -71,7 +70,6 @@ App.screens.menu = (function () {
         var c = cards[focus];
         if (!c) return;
         if (c.acao === "preset") App.router.go("playlist", c.ref);
-        else if (c.acao === "diag") App.router.go("diag");
         else App.router.go("gallery");
       } else if (action === "BACK") {
         // No menu raiz, Voltar fecha o app (só no Tizen; no PC é no-op).
