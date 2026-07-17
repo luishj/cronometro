@@ -1,0 +1,267 @@
+====================================================================
+ GUIA — EMPACOTAR E INSTALAR O CRONÔMETRO NA TV HYUNDAI (TIZEN OS)
+ Modelo alvo: Hyundai 40" Smart FHD  ·  HYEK40FHD  ·  Full HD 1920x1080
+====================================================================
+
+Este guia leva o app (que já é HTML/CSS/JS) do zero até rodando na TV.
+Faça na máquina onde você vai desenvolver. Leia até o fim antes de começar.
+
+O app já está pronto e no formato certo (Tizen Web App). Empacotar como app
+resolve inclusive o MP3 (roda no contexto do app, não precisa de servidor).
+
+
+--------------------------------------------------------------------
+ 0) O QUE VOCÊ VAI PRECISAR (pré-requisitos)
+--------------------------------------------------------------------
+[ ] PC com Windows/Mac/Linux e Java instalado (o Tizen Studio pede JDK).
+[ ] A pasta do projeto "cronometro-personalizado" copiada para esse PC.
+[ ] A TV e o PC na MESMA REDE (mesmo Wi-Fi ou mesmo cabo/roteador).
+[ ] Uma CONTA SAMSUNG (grátis) — usada para gerar o certificado.
+[ ] O IP do PC e o IP da TV (como pegar: ver passos 4 e 5).
+[ ] Um ícone "icon.png" (recomendado 512x512 px) — ver passo 3.
+
+
+--------------------------------------------------------------------
+ 1) INSTALAR O TIZEN STUDIO
+--------------------------------------------------------------------
+1.1  Baixe o "Tizen Studio (with IDE installer)" em:
+        https://developer.tizen.org/development/tizen-studio/download
+1.2  Instale normalmente.
+1.3  Abra o "Package Manager" (vem junto do Tizen Studio).
+1.4  Na aba "Main SDK", instale (se ainda não tiver):
+        - "TV Extensions"
+1.5  Na aba "Extension SDK", instale:
+        - "Samsung Certificate Extension"
+        - "TV Extensions-x.x" (extensão de TV, se aparecer separada)
+1.6  Feche e reabra o Tizen Studio depois de instalar as extensões.
+
+OBS: sem as "TV Extensions" e o "Samsung Certificate Extension" você NÃO
+     consegue assinar/instalar em TV. É a parte mais importante.
+
+
+--------------------------------------------------------------------
+ 2) IMPORTAR O PROJETO NO TIZEN STUDIO
+--------------------------------------------------------------------
+Jeito mais simples (criar projeto e colocar nossos arquivos dentro):
+
+2.1  File > New > Tizen Project
+2.2  Escolha: Template  >  TV  >  Web Application  >  Basic (Empty) > Next
+2.3  Dê um nome (ex.: CronometroLuta) e finalize.
+2.4  Abra a PASTA desse novo projeto no explorador de arquivos do sistema
+     (o Tizen Studio mostra o caminho; normalmente em
+      C:\Users\SEU_USUARIO\TizenStudio\workspace\CronometroLuta).
+2.5  APAGUE o index.html/config.xml de exemplo que o template criou e
+     COPIE PARA DENTRO todos os nossos arquivos:
+        - index.html
+        - config.xml        (o nosso, já pronto na raiz do projeto)
+        - a pasta css/
+        - a pasta js/
+        - a pasta assets/    (com as músicas)
+        - icon.png           (ver passo 3)
+2.6  De volta ao Tizen Studio, clique no projeto e aperte F5 (Refresh)
+     para ele enxergar os arquivos copiados.
+
+
+--------------------------------------------------------------------
+ 3) ADICIONAR O ÍCONE
+--------------------------------------------------------------------
+3.1  Crie/consiga um PNG quadrado (recomendado 512x512).
+3.2  Salve como "icon.png" na RAIZ do projeto (mesma pasta do index.html).
+     O config.xml já aponta para <icon src="icon.png"/>.
+     Sem ícone o empacotamento pode reclamar.
+
+
+--------------------------------------------------------------------
+ 4) DESCOBRIR O IP DO PC (máquina de desenvolvimento)
+--------------------------------------------------------------------
+Windows: abra o Prompt e digite:  ipconfig
+         anote o "Endereço IPv4" (ex.: 192.168.0.50)
+Mac/Linux:  ifconfig  (ou  ip addr )
+
+Guarde esse IP: a TV vai precisar dele no modo desenvolvedor.
+
+
+--------------------------------------------------------------------
+ 5) ATIVAR O MODO DESENVOLVEDOR NA TV E PEGAR O IP DELA
+--------------------------------------------------------------------
+5.1  Na TV, abra a tela de APPS (Smart Hub / lista de aplicativos).
+5.2  Com o controle, digite os números: 1 2 3 4 5
+       -> Deve abrir uma janela "Developer Mode".
+5.3  Ligue "Developer Mode: On".
+5.4  No campo "Host PC IP", digite o IP do PC (do passo 4).
+5.5  Confirme e REINICIE a TV (desligue e ligue).
+5.6  Pegue o IP DA TV:
+       Configurações > Geral > Rede > Status da Rede  (anote o IP da TV)
+       (ex.: 192.168.0.77)
+
+OBS HYUNDAI/TIZEN LICENCIADO: na Samsung o atalho é "12345" na tela de Apps.
+    Na Hyundai costuma ser igual, mas SE não abrir a janela, procure:
+      Configurações > Suporte > (Sobre / Modo desenvolvedor)
+    ou teste digitar 12345 dentro da loja de apps. Se não achar de jeito
+    nenhum, use o PLANO B no fim deste guia (dispositivo externo HDMI).
+
+
+--------------------------------------------------------------------
+ 6) CONECTAR O TIZEN STUDIO NA TV
+--------------------------------------------------------------------
+6.1  Abra o "Device Manager" (Tools > Device Manager) no Tizen Studio.
+6.2  Clique em "Scan" (procura na rede) OU adicione manual com o IP da TV.
+     Manual pela linha de comando (dentro da pasta tools do Tizen Studio):
+         sdb connect 192.168.0.77
+     (troque pelo IP real da TV; a porta padrão é 26101)
+6.3  A TV deve aparecer como conectada (ícone verde).
+     Se pedir para AUTORIZAR na TV, aceite na tela da TV.
+
+
+--------------------------------------------------------------------
+ 7) PEGAR O DUID DA TV (necessário pro certificado)
+--------------------------------------------------------------------
+7.1  Com a TV conectada no Device Manager, clique com o botão direito
+     no aparelho > "DUID" (ou veja a coluna DUID).
+7.2  COPIE esse DUID (é um código longo). Vai usar no passo 8.
+
+
+--------------------------------------------------------------------
+ 8) CRIAR O CERTIFICADO (assinatura do app)
+--------------------------------------------------------------------
+Sem certificado a TV NÃO instala o app. São dois: Author + Distributor.
+
+8.1  Abra o "Certificate Manager" (Tools > Certificate Manager).
+8.2  Clique em "+" (novo perfil) > escolha "Samsung".
+8.3  Tipo de aparelho: "TV".
+8.4  AUTHOR certificate:
+        - Crie um novo (informe nome, senha).
+        - Faça login com sua CONTA SAMSUNG quando pedir.
+8.5  DISTRIBUTOR certificate:
+        - Cole o DUID da TV (passo 7) quando solicitado
+          (pode adicionar mais de um DUID se tiver mais TVs).
+8.6  Finalize. Deixe esse perfil como ATIVO (Set as Active).
+
+DICA: guarde a senha e um backup da pasta de certificados. Se perder,
+      terá que refazer. Para adicionar OUTRA TV depois, basta editar o
+      Distributor e incluir o DUID da nova TV.
+
+
+--------------------------------------------------------------------
+ 9) AJUSTAR O config.xml COM O ID DO CERTIFICADO
+--------------------------------------------------------------------
+9.1  Abra o config.xml do projeto no Tizen Studio (aba "Overview").
+9.2  O "Application ID" tem o formato:  XXXXXXXXXX.CronometroLuta
+     O prefixo "XXXXXXXXXX" (10 caracteres) vem do seu certificado —
+     o Tizen Studio normalmente PREENCHE isso sozinho ao empacotar.
+     Se aparecer o placeholder "ABCDEFGHIJ", pode deixar que o Studio ajusta,
+     ou clique em "Edit" e gere o ID pelo próprio Studio.
+9.3  Confira que o "Package" também bate com esse prefixo.
+
+
+--------------------------------------------------------------------
+ 10) EMPACOTAR (.wgt) E INSTALAR NA TV
+--------------------------------------------------------------------
+Com a TV conectada (passo 6) e o certificado ativo (passo 8):
+
+Opção A (instala direto):
+   10.1  Botão direito no projeto > "Run As" > "Tizen Web Application".
+   10.2  O Studio assina, gera o .wgt, instala e ABRE o app na TV.
+
+Opção B (só gerar o .wgt para instalar depois):
+   10.1  Botão direito no projeto > "Build Signed Package".
+   10.2  O arquivo .wgt fica na pasta do projeto.
+   10.3  Instalar por linha de comando:
+             sdb install CronometroLuta.wgt
+
+Se aparecer o app na TV = deu certo! Ele fica na lista de aplicativos.
+
+
+--------------------------------------------------------------------
+ 11) TESTAR O CONTROLE REMOTO NA TV
+--------------------------------------------------------------------
+11.1  Abra o app na TV.
+11.2  Entre no card "🛠️ Diagnóstico" no menu.
+11.3  Aperte CADA botão do controle (setas, OK, Voltar, e o que mais quiser).
+11.4  Anote os códigos que aparecerem como "não mapeada" (em vermelho).
+11.5  Me mande esses números — eu adiciono no arquivo:
+             js/input/remote.js   (mapa KEYMAP)
+      e você reempacota (passo 10).
+
+OBS: setas, OK (Enter) e Voltar já são padrão no Tizen e devem funcionar
+     de primeira. O Voltar já está mapeado (código 10009).
+
+
+--------------------------------------------------------------------
+ 12) AJUSTES NA TV (recomendados)
+--------------------------------------------------------------------
+[ ] DESLIGAR descanso de tela / economia que apaga a tela:
+        Configurações > Geral (ou Sistema) > Tempo de proteção / Screensaver
+    (o app já pede pra manter a tela acesa, mas vale garantir na TV).
+[ ] Deixar a HORA automática correta (fuso horário) para o relógio do app:
+        Configurações > Geral > Gerenciador de Sistema > Hora
+[ ] Volume da TV num nível bom para a academia.
+
+
+--------------------------------------------------------------------
+ 13) ATUALIZAR O APP NO FUTURO
+--------------------------------------------------------------------
+Sempre que mudar algo no código (presets, músicas, layout, KEYMAP):
+   1. Copie os arquivos alterados para a pasta do projeto no Tizen Studio.
+   2. Refaça o passo 10 (Run As / Build + install).
+   A nova versão substitui a anterior na TV.
+
+Para editar os TREINOS (presets) e as PLAYLISTS de música:
+   - Presets:   js/data/mock.js  ->  lista "presets"
+   - Músicas:   js/data/mock.js  ->  lista "playlists"
+     (coloque os .mp3 em assets/musicas/ ou assets/musicas/kids/ e
+      liste os nomes em "faixas"; ver assets/musicas/LEIA-ME.txt)
+
+
+--------------------------------------------------------------------
+ 14) PROBLEMAS COMUNS (troubleshooting)
+--------------------------------------------------------------------
+- TV não conecta no Device Manager:
+    * PC e TV na mesma rede? Firewall do PC bloqueando? Libere o Tizen Studio.
+    * Reative o Developer Mode e confira o IP do PC digitado na TV.
+    * Tente:  sdb kill-server   e depois   sdb connect <IP_DA_TV>
+
+- Erro de certificado / "signature" ao instalar:
+    * DUID da TV está no Distributor certificate? (passo 7 e 8)
+    * Perfil de certificado está ATIVO no Certificate Manager?
+
+- App instala mas não abre / tela preta:
+    * Confira que TODOS os arquivos foram copiados (css, js, assets).
+    * Veja o log:  Tools > Web Inspector (depura o app rodando na TV).
+
+- Música não toca:
+    * Confirme que os .mp3 existem nos caminhos listados em mock.js.
+    * O 1º som só libera após apertar um botão do controle (regra da TV).
+
+- Botão do controle não faz nada:
+    * Use o "🛠️ Diagnóstico" (passo 11) e me passe o código para mapear.
+
+
+--------------------------------------------------------------------
+ PLANO B — SE O MODO DESENVOLVEDOR DA HYUNDAI NÃO ABRIR
+--------------------------------------------------------------------
+Se não for possível ativar o Developer Mode nesta TV:
+   - Ligue um dispositivo externo na entrada HDMI (mini-PC, Raspberry Pi
+     ou TV Box Android barata).
+   - Rode o app nesse dispositivo em modo quiosque (navegador em tela cheia),
+     servindo os arquivos localmente. A TV só exibe o HDMI.
+   - Vantagem: não depende do sistema da TV; controle pela caixinha.
+   - Me avise que eu monto o passo a passo desse cenário.
+
+
+====================================================================
+ RESUMO RÁPIDO (checklist)
+====================================================================
+[ ] Instalar Tizen Studio + TV Extensions + Samsung Certificate Extension
+[ ] Copiar o projeto para dentro de um Tizen Web Project
+[ ] Adicionar icon.png (512x512)
+[ ] Pegar IP do PC (ipconfig)
+[ ] TV: Developer Mode ON + IP do PC + reiniciar
+[ ] Pegar IP da TV (Status da Rede)
+[ ] Device Manager: sdb connect <IP_DA_TV>
+[ ] Pegar DUID da TV
+[ ] Certificate Manager: criar Author + Distributor (com o DUID)
+[ ] Run As > Tizen Web Application (instala na TV)
+[ ] Abrir "🛠️ Diagnóstico" e conferir os botões do controle
+[ ] Desligar screensaver e ajustar a hora na TV
+====================================================================

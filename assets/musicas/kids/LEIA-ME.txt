@@ -1,0 +1,15 @@
+PLAYLIST KIDS
+=============
+
+Coloque aqui os .mp3 do treino KIDS (playlist separada da "Geral").
+
+Depois de copiar os arquivos para esta pasta, liste-os em
+js/data/mock.js, na playlist com id "kids", dentro de "faixas". Ex.:
+
+  { id: "kids", nome: "🧒 Kids", faixas: [
+      "assets/musicas/kids/musica1.mp3",
+      "assets/musicas/kids/musica2.mp3"
+  ]}
+
+Enquanto não houver arquivos aqui, a playlist Kids roda em silêncio
+(o app pula faixas que não existem sem travar).

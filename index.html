@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cronômetro de Luta</title>
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <!-- #safe garante a margem contra o overscan da TV -->
+  <div id="safe">
+    <!-- Relógio de parede (hora atual), sempre visível no canto -->
+    <div id="clock">--:--</div>
+    <div id="app"><!-- as telas são renderizadas aqui --></div>
+  </div>
+
+  <div id="hint">OK: selecionar &nbsp;|&nbsp; Setas: navegar &nbsp;|&nbsp; Voltar: menu</div>
+
+  <!-- Sem build. Scripts carregados em ordem; namespace global window.App -->
+  <script src="js/data/mock.js"></script>
+  <script src="js/data/source.js"></script>
+  <script src="js/input/remote.js"></script>
+  <script src="js/core/tizen.js"></script>
+  <script src="js/core/clock.js"></script>
+  <script src="js/core/sound.js"></script>
+  <script src="js/core/music.js"></script>
+  <script src="js/core/timer.js"></script>
+  <script src="js/screens/menu.js"></script>
+  <script src="js/screens/playlist.js"></script>
+  <script src="js/screens/timer.js"></script>
+  <script src="js/screens/gallery.js"></script>
+  <script src="js/screens/diag.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Ferramentas locais / editor
+.claude/
+.vscode/
+.idea/
+
+# Sistema operacional
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Build/empacotamento Tizen (gerados)
+*.wgt
+.buildResult/

@@ -1,0 +1,39 @@
+PASTA DE MÚSICAS (PLAYLISTS)
+============================
+
+Depois de escolher o round, o app pergunta qual PLAYLIST tocar.
+Cada playlist é uma "pasta" definida em js/data/mock.js -> "playlists".
+
+Playlists atuais:
+  - "Geral" (id: geral)  -> arquivos direto nesta pasta (assets/musicas/)
+  - "Kids"  (id: kids)   -> arquivos em assets/musicas/kids/
+  - "Sem música"         -> nenhuma faixa (treino em silêncio)
+
+COMO ADICIONAR MÚSICAS
+----------------------
+1. Copie seus .mp3 para a pasta da playlist desejada:
+     Geral -> assets/musicas/
+     Kids  -> assets/musicas/kids/
+2. Liste os nomes dos arquivos em js/data/mock.js, dentro de "faixas"
+   da playlist correspondente. Ex.:
+
+     { id: "kids", nome: "🧒 Kids", faixas: [
+         "assets/musicas/kids/desenho1.mp3",
+         "assets/musicas/kids/desenho2.mp3"
+     ]}
+
+COMO CRIAR UMA NOVA PLAYLIST
+----------------------------
+Adicione um novo item na lista "playlists" em js/data/mock.js com um id,
+um nome e a lista de faixas. Ela aparece automaticamente na tela de seleção.
+
+COMPORTAMENTO
+-------------
+  - A música toca quando a LUTA começa (junto com o sino).
+  - Pausa na preparação e no descanso, e continua de onde parou.
+  - Abaixa para 10% nos 3 segundos finais para destacar o bipe.
+  - Para e volta ao início quando o treino termina.
+  - Se um arquivo não existir, o app pula a faixa sem travar.
+
+Formato recomendado: .mp3 (melhor compatibilidade com TVs).
+Volume padrão: 70% (ajustável em js/core/music.js -> setVolume).
