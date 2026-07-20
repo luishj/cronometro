@@ -38,6 +38,18 @@ App.screens.menu = (function () {
     el.innerHTML = html;
     items = el.querySelectorAll(".menu-card");
     updateFocus();
+    // Suporte a mouse/seta do controle no navegador da TV.
+    App.pointer.bindList(items,
+      function (i) { focus = i; updateFocus(); },
+      function (i) { selecionar(i); });
+  }
+
+  // Confirma o card i (usado pelo OK do controle e pelo clique do mouse).
+  function selecionar(i) {
+    var c = cards[i];
+    if (!c) return;
+    if (c.acao === "preset") App.router.go("playlist", c.ref);
+    else App.router.go("gallery");
   }
 
   function updateFocus() {
@@ -67,13 +79,9 @@ App.screens.menu = (function () {
     },
     handleInput: function (action) {
       if (action === "OK") {
-        var c = cards[focus];
-        if (!c) return;
-        if (c.acao === "preset") App.router.go("playlist", c.ref);
-        else App.router.go("gallery");
+        selecionar(focus);
       } else if (action === "BACK") {
-        // No menu raiz, Voltar fecha o app (só no Tizen; no PC é no-op).
-        if (App.tizen) App.tizen.sairDoApp();
+        // Menu raiz: não há para onde voltar (no navegador da TV não fecha a aba).
       } else {
         move(action);
       }

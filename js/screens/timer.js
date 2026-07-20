@@ -26,7 +26,23 @@ App.screens.timer = (function () {
         '<div class="timer-phase" id="t-phase"></div>' +
         '<div class="timer-clock" id="t-clock">00:00</div>' +
         '<div class="timer-status" id="t-status">Pressione OK para iniciar</div>' +
+        '<div class="timer-controls">' +
+          '<button class="btn" id="t-btn-ok">Iniciar</button>' +
+          '<button class="btn" id="t-btn-reset">Reset</button>' +
+          '<button class="btn" id="t-btn-back">Voltar</button>' +
+        '</div>' +
       '</div>';
+    // Suporte a mouse/seta do controle no navegador da TV.
+    App.pointer.bindClick(document.getElementById("t-btn-ok"), acaoOk);
+    App.pointer.bindClick(document.getElementById("t-btn-reset"), function () { timer.reset(); });
+    App.pointer.bindClick(document.getElementById("t-btn-back"), function () { App.router.go("menu"); });
+  }
+
+  // Play/pausa/reinicia conforme o estado (usado pelo OK e pelo botão).
+  function acaoOk() {
+    if (!timer) return;
+    if (timer.getState().phase === "DONE") timer.reset();
+    else timer.toggle();
   }
 
   function paint(state) {
@@ -53,6 +69,14 @@ App.screens.timer = (function () {
     else if (state.phase === "PREPARE" && !state.running) status.textContent = "OK: iniciar preparação · Voltar: menu";
     else if (state.running) status.textContent = "OK: pausar · ↓ reset · Voltar: menu";
     else status.textContent = "OK: iniciar · ↓ reset · Voltar: menu";
+
+    // Rótulo do botão principal acompanha o estado (para o modo mouse).
+    var btnOk = document.getElementById("t-btn-ok");
+    if (btnOk) {
+      if (state.phase === "DONE") btnOk.textContent = "Reiniciar";
+      else if (state.running) btnOk.textContent = "Pausar";
+      else btnOk.textContent = "Iniciar";
+    }
   }
 
   return {
@@ -76,8 +100,7 @@ App.screens.timer = (function () {
     },
     handleInput: function (action) {
       if (action === "OK") {
-        if (timer.getState().phase === "DONE") timer.reset();
-        else timer.toggle();
+        acaoOk();
       } else if (action === "DOWN") {
         timer.reset();
       } else if (action === "BACK") {

@@ -17,8 +17,17 @@ App.screens.gallery = (function () {
                 '<span class="caption">' + f.titulo + '</span>' +
               '</div>';
     });
+    html += '<div class="gallery-controls">' +
+              '<button class="btn" id="g-prev">‹</button>' +
+              '<button class="btn" id="g-back">Voltar</button>' +
+              '<button class="btn" id="g-next">›</button>' +
+            '</div>';
     html += '</div>';
     el.innerHTML = html;
+    // Suporte a mouse/seta do controle no navegador da TV.
+    App.pointer.bindClick(el.querySelector("#g-prev"), function () { show(idx - 1); startAuto(); });
+    App.pointer.bindClick(el.querySelector("#g-next"), function () { show(idx + 1); startAuto(); });
+    App.pointer.bindClick(el.querySelector("#g-back"), function () { App.router.go("menu"); });
   }
 
   function show(i) {

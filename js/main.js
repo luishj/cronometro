@@ -32,7 +32,6 @@ window.addEventListener("load", function () {
   App.router.register("gallery", App.screens.gallery);
   App.router.register("diag", App.screens.diag);
 
-  App.tizen.init();
   App.clock.init();
   App.remote.init(function (action) { App.router.input(action); });
 
