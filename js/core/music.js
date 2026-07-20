@@ -12,6 +12,16 @@ App.music = (function () {
   var volume = 0.7;          // volume normal
   var DUCK = 0.1;            // fração do volume nos 3 segundos finais (0.1 = 10%)
 
+  // Embaralha uma cópia da lista (Fisher-Yates) para tocar em ordem aleatória.
+  function shuffle(list) {
+    var a = list.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
   function ensureAudio() {
     if (!audio) {
       audio = new Audio();
@@ -49,9 +59,9 @@ App.music = (function () {
   }
 
   return {
-    // Carrega a playlist (lista de URLs/caminhos de .mp3).
+    // Carrega a playlist (lista de URLs/caminhos de .mp3) em ordem aleatória.
     load: function (list) {
-      tracks = list || [];
+      tracks = shuffle(list || []);
       idx = 0;
       errorCount = 0;
       if (tracks.length) ensureAudio().src = tracks[0];
