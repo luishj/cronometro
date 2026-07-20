@@ -28,12 +28,14 @@ App.screens.timer = (function () {
         '<div class="timer-status" id="t-status">Pressione OK para iniciar</div>' +
         '<div class="timer-controls">' +
           '<button class="btn" id="t-btn-ok">Iniciar</button>' +
+          '<button class="btn" id="t-btn-skip">⏭ Pular música</button>' +
           '<button class="btn" id="t-btn-reset">Reset</button>' +
           '<button class="btn" id="t-btn-back">Voltar</button>' +
         '</div>' +
       '</div>';
     // Suporte a mouse/seta do controle no navegador da TV.
     App.pointer.bindClick(document.getElementById("t-btn-ok"), acaoOk);
+    App.pointer.bindClick(document.getElementById("t-btn-skip"), function () { App.music.skip(); });
     App.pointer.bindClick(document.getElementById("t-btn-reset"), function () { timer.reset(); });
     App.pointer.bindClick(document.getElementById("t-btn-back"), function () { App.router.go("menu"); });
   }
@@ -67,8 +69,8 @@ App.screens.timer = (function () {
 
     if (state.phase === "DONE") status.textContent = "Treino concluído · OK para reiniciar";
     else if (state.phase === "PREPARE" && !state.running) status.textContent = "OK: iniciar preparação · Voltar: menu";
-    else if (state.running) status.textContent = "OK: pausar · ↓ reset · Voltar: menu";
-    else status.textContent = "OK: iniciar · ↓ reset · Voltar: menu";
+    else if (state.running) status.textContent = "OK: pausar · → pular música · ↓ reset · Voltar: menu";
+    else status.textContent = "OK: iniciar · → pular música · ↓ reset · Voltar: menu";
 
     // Rótulo do botão principal acompanha o estado (para o modo mouse).
     var btnOk = document.getElementById("t-btn-ok");
@@ -103,6 +105,8 @@ App.screens.timer = (function () {
         acaoOk();
       } else if (action === "DOWN") {
         timer.reset();
+      } else if (action === "RIGHT") {
+        App.music.skip();
       } else if (action === "BACK") {
         App.router.go("menu");
       }

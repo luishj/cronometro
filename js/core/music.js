@@ -88,6 +88,15 @@ App.music = (function () {
       audio.volume = abaixar ? volume * DUCK : volume;
     },
 
+    // Pula para a próxima faixa (aleatória). Só força tocar se já estava tocando;
+    // se estava pausada (preparação/descanso), apenas troca e o sync toca na hora certa.
+    skip: function () {
+      if (!tracks.length || !audio) return;
+      var estavaTocando = !audio.paused;
+      loadTrack(idx + 1);
+      if (estavaTocando) play();
+    },
+
     stop: function () {
       if (!audio) return;
       audio.pause();
