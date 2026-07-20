@@ -10,7 +10,7 @@ App.screens.playlist = (function () {
   var el, preset = null, playlists = [], items = [], focus = 0;
 
   function render() {
-    var html = '<div class="screen">';
+    var html = '<div class="screen has-back">';
     html += '<button class="btn btn-back" id="pl-back">‹ Voltar</button>';
     html += '<div class="screen-title">MÚSICA DO TREINO</div>';
     html += '<div class="screen-subtitle">' + (preset ? preset.nome : "") + '</div>';
