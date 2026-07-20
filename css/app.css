@@ -14,8 +14,9 @@ html, body {
   color: var(--fg);
   font-family: "Segoe UI", Arial, sans-serif;
   overflow: hidden;
-  /* TVs não têm cursor nem seleção de texto */
-  cursor: none;
+  /* A seta do controle (modo navegador da TV) precisa ficar visível para
+     mirar/clicar nos cards; itens interativos mostram a "mãozinha" (ver abaixo). */
+  cursor: default;
   user-select: none;
 }
 
