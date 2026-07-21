@@ -14,8 +14,9 @@ html, body {
   color: var(--fg);
   font-family: "Segoe UI", Arial, sans-serif;
   overflow: hidden;
-  /* TVs não têm cursor nem seleção de texto */
-  cursor: none;
+  /* A seta do controle (modo navegador da TV) precisa ficar visível para
+     mirar/clicar nos cards; itens interativos mostram a "mãozinha" (ver abaixo). */
+  cursor: default;
   user-select: none;
 }
 
@@ -49,6 +50,62 @@ html, body {
   color: var(--muted);
   font-size: 1.6vmin;
   letter-spacing: 0.05em;
+}
+
+/* Elementos interativos mostram a "mãozinha" para a seta/mouse do controle
+   da TV (modo navegador). */
+.menu-card, .menu-item, .btn, .slide { cursor: pointer; }
+
+/* ---------- Botões (modo mouse: navegador da TV) ---------- */
+.btn {
+  font-family: inherit;
+  color: var(--fg);
+  background: var(--card);
+  border: 0.35vmin solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.2vmin;
+  padding: 1.6vh 2.4vw;
+  font-size: 2.6vmin;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+.btn:hover, .btn:focus {
+  border-color: var(--accent);
+  background: linear-gradient(160deg, #2a2410 0%, #16141f 100%);
+  transform: scale(1.05);
+  outline: none;
+}
+
+/* Botão "Voltar" fixo no canto superior esquerdo das telas internas */
+.btn-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  padding: 1.2vh 1.8vw;
+  font-size: 2.2vmin;
+}
+
+/* Telas com botão "Voltar" flutuante reservam espaço no topo para o
+   conteúdo (título) não ficar embaixo do botão. */
+.screen.has-back { padding-top: 8vh; }
+
+.timer-controls {
+  display: flex;
+  gap: 2vw;
+  justify-content: center;
+  margin-top: 4vh;
+}
+
+.gallery-controls {
+  position: absolute;
+  bottom: 2vh;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  gap: 2vw;
+  justify-content: center;
 }
 
 /* ---------- Layout genérico de tela ---------- */
