@@ -10,7 +10,7 @@ App.music = (function () {
   var idx = 0;
   var errorCount = 0;
   var volume = 0.7;          // volume normal
-  var DUCK = 0.1;            // fração do volume nos 3 segundos finais (0.1 = 10%)
+  var DUCK = 0.05;           // fração do volume nos segundos finais (0.05 = 5%)
 
   // Embaralha uma cópia da lista (Fisher-Yates) para tocar em ordem aleatória.
   function shuffle(list) {
@@ -83,8 +83,8 @@ App.music = (function () {
       } else {
         if (!audio.paused) audio.pause();        // preparação ou cronômetro pausado
       }
-      // Duck sustentado nos 3 segundos finais da luta/descanso.
-      var abaixar = ativo && state.remaining <= 3 && state.remaining > 0;
+      // Duck sustentado nos 5 segundos finais da luta/descanso (acompanha os bipes finais).
+      var abaixar = ativo && state.remaining <= 5 && state.remaining > 0;
       audio.volume = abaixar ? volume * DUCK : volume;
     },
 

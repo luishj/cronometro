@@ -38,6 +38,24 @@ App.screens.timer = (function () {
     App.pointer.bindClick(document.getElementById("t-btn-skip"), function () { App.music.skip(); });
     App.pointer.bindClick(document.getElementById("t-btn-reset"), function () { timer.reset(); });
     App.pointer.bindClick(document.getElementById("t-btn-back"), function () { App.router.go("menu"); });
+
+    // Clicar em qualquer área vazia da tela (fora dos botões) alterna iniciar/pausar,
+    // pra não precisar mirar o cursor no botão pequeno com o controle da TV.
+    document.querySelector(".timer-screen").addEventListener("click", function (e) {
+      if (dentroDeBotao(e.target)) return;   // clique num botão: deixa o botão agir
+      if (App.sound && App.sound.unlock) App.sound.unlock();
+      acaoOk();
+    });
+  }
+
+  // Sobe na árvore procurando um <button>/.btn (compatível com navegadores de TV sem closest()).
+  function dentroDeBotao(node) {
+    while (node && node !== document) {
+      if (node.tagName === "BUTTON" ||
+          (node.className && ("" + node.className).indexOf("btn") !== -1)) return true;
+      node = node.parentNode;
+    }
+    return false;
   }
 
   // Play/pausa/reinicia conforme o estado (usado pelo OK e pelo botão).
@@ -69,8 +87,8 @@ App.screens.timer = (function () {
 
     if (state.phase === "DONE") status.textContent = "Treino concluído · OK para reiniciar";
     else if (state.phase === "PREPARE" && !state.running) status.textContent = "OK: iniciar preparação · Voltar: menu";
-    else if (state.running) status.textContent = "OK: pausar · → pular música · ↓ reset · Voltar: menu";
-    else status.textContent = "OK: iniciar · → pular música · ↓ reset · Voltar: menu";
+    else if (state.running) status.textContent = "Clique na tela ou OK: pausar · → pular música · ↓ reset · Voltar: menu";
+    else status.textContent = "Clique na tela ou OK: iniciar · → pular música · ↓ reset · Voltar: menu";
 
     // Rótulo do botão principal acompanha o estado (para o modo mouse).
     var btnOk = document.getElementById("t-btn-ok");
