@@ -37,8 +37,8 @@ App.sound = (function () {
     // Sinais do cronômetro:
     start: function () { beep(880, 500, "square"); },              // início do round (sino)
     warn:  function () { beep(600, 120, "sine"); },                // bipe 10s..4s restantes
-    warnFinal: function () { beep(1000, 220, "square", 1.0); },    // bipe dos segundos finais (mais agudo e alto)
-    end:   function () { beep(440, 700, "square", 1.0); },         // fim do round (volume máximo)
+    warnFinal: function () { beep(1000, 220, "square", 0.6); },    // bipe dos segundos finais (mais agudo e alto)
+    end:   function () { beep(440, 700, "square", 0.6); },         // fim do round (volume alto sem clipar)
     finish: function () { beep(880, 250); setTimeout(function(){ beep(660, 600); }, 300); }
   };
 })();
