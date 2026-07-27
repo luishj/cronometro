@@ -11,6 +11,16 @@ App.music = (function () {
   var errorCount = 0;
   var volume = 0.7;          // volume normal
   var DUCK = 0.05;           // fração do volume nos segundos finais (0.05 = 5%)
+  var onChange = null;       // callback avisado quando a faixa/estado muda (usado pelo player standalone)
+
+  function notify() { if (onChange) onChange(); }
+
+  // Nome amigável a partir do caminho: "assets/musicas/Rock/AC_DC - X.mp3" -> "AC_DC - X"
+  function displayName(path) {
+    if (!path) return "";
+    var file = path.split("/").pop();
+    return file.replace(/\.mp3$/i, "");
+  }
 
   // Embaralha uma cópia da lista (Fisher-Yates) para tocar em ordem aleatória.
   function shuffle(list) {
@@ -28,6 +38,8 @@ App.music = (function () {
       audio.volume = volume;
       audio.addEventListener("ended", nextTrack);
       audio.addEventListener("error", skipOnError);
+      audio.addEventListener("play", notify);   // reflete play/pausa/troca de faixa na tela do player
+      audio.addEventListener("pause", notify);
     }
     return audio;
   }
@@ -64,7 +76,11 @@ App.music = (function () {
       tracks = shuffle(list || []);
       idx = 0;
       errorCount = 0;
-      if (tracks.length) ensureAudio().src = tracks[0];
+      if (tracks.length) {
+        var a = ensureAudio();
+        a.volume = volume;          // desfaz qualquer duck deixado por um treino anterior
+        a.src = tracks[0];
+      }
     },
 
     // Sincroniza a música com o estado do cronômetro.
@@ -108,6 +124,23 @@ App.music = (function () {
     setVolume: function (v) {
       volume = v;
       if (audio) audio.volume = v;
-    }
+    },
+
+    // ---- Controles do player standalone (tela Música, independentes do cronômetro) ----
+    // Toca a faixa atual (ou a 1ª, se nada estiver carregado).
+    play: function () { play(); },
+    // Próxima/anterior SEMPRE tocando (diferente de skip(), que só toca se já estava tocando).
+    next: function () { if (!tracks.length) return; loadTrack(idx + 1); play(); },
+    prev: function () { if (!tracks.length) return; loadTrack(idx - 1); play(); },
+    // Alterna pausar/tocar.
+    toggle: function () {
+      var a = ensureAudio();
+      if (!a.src) { if (tracks.length) play(); return; }
+      if (a.paused) play(); else a.pause();
+    },
+    isPlaying: function () { return !!(audio && audio.src && !audio.paused); },
+    currentName: function () { return tracks.length ? displayName(tracks[idx]) : ""; },
+    // Registra (ou limpa, com null) o callback avisado quando a faixa/estado muda.
+    setOnChange: function (fn) { onChange = fn || null; }
   };
 })();
