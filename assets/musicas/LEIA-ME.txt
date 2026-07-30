@@ -5,15 +5,20 @@ Depois de escolher o round, o app pergunta qual PLAYLIST tocar.
 Cada playlist é uma "pasta" definida em js/data/mock.js -> "playlists".
 
 Playlists atuais:
-  - "Geral" (id: geral)  -> arquivos direto nesta pasta (assets/musicas/)
-  - "Kids"  (id: kids)   -> arquivos em assets/musicas/kids/
-  - "Sem música"         -> nenhuma faixa (treino em silêncio)
+  - "Geral"   (id: geral)   -> Rock + Hip-hop juntos (montada automaticamente)
+  - "Rock"    (id: rock)    -> arquivos em assets/musicas/Rock/
+  - "Hip-hop" (id: hip-hop) -> arquivos em assets/musicas/Hip-hop/
+  - "Kids"    (id: kids)    -> arquivos em assets/musicas/kids/
+  - "Sem música"            -> nenhuma faixa (treino em silêncio)
 
 COMO ADICIONAR MÚSICAS
 ----------------------
 1. Copie seus .mp3 para a pasta da playlist desejada:
-     Geral -> assets/musicas/
-     Kids  -> assets/musicas/kids/
+     Rock    -> assets/musicas/Rock/
+     Hip-hop -> assets/musicas/Hip-hop/
+     Kids    -> assets/musicas/kids/
+   (a "Geral" não tem pasta própria: o que entra em Rock ou Hip-hop
+    aparece nela automaticamente)
 2. Liste os nomes dos arquivos em js/data/mock.js, dentro de "faixas"
    da playlist correspondente. Ex.:
 
