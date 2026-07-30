@@ -28,6 +28,7 @@ App.router = (function () {
 window.addEventListener("load", function () {
   App.router.register("menu", App.screens.menu);
   App.router.register("playlist", App.screens.playlist);
+  App.router.register("music", App.screens.music);
   App.router.register("timer", App.screens.timer);
   App.router.register("gallery", App.screens.gallery);
   App.router.register("diag", App.screens.diag);

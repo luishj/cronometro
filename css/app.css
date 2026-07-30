@@ -203,6 +203,19 @@ html, body {
 .menu-item .name { font-size: 3.4vmin; font-weight: 600; }
 .menu-item .desc { font-size: 2.2vmin; color: var(--muted); }
 
+/* ---------- Player de música (tela Música) ---------- */
+.music-player { align-items: center; text-align: center; }
+.music-player .screen-title { margin-top: 2vh; }
+.music-now {
+  font-size: 3.4vmin;
+  font-weight: 600;
+  color: #cfd6e4;
+  margin: 4vh 0 2vh;
+  min-height: 4.5vmin;
+  max-width: 90vw;
+}
+.music-hint { margin-top: 3vh; color: var(--muted); }
+
 /* ---------- Diagnóstico de controle ---------- */
 .diag-screen { align-items: center; text-align: center; }
 .diag-hint {

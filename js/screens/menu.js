@@ -20,6 +20,7 @@ App.screens.menu = (function () {
       if (p.descansoSeg > 0) linhas.push(fmt(p.descansoSeg) + " descanso");
       return { icone: p.icone || "🥊", nome: p.nome, desc: linhas.join("<br>"), acao: "preset", ref: p };
     });
+    cards.push({ icone: "🎵", nome: "Música", desc: "Tocar playlists<br>sem cronômetro", acao: "music" });
     cards.push({ icone: "📺", nome: "Galeria", desc: "Patrocinadores<br>e campeonatos", acao: "gallery" });
   }
 
@@ -49,6 +50,7 @@ App.screens.menu = (function () {
     var c = cards[i];
     if (!c) return;
     if (c.acao === "preset") App.router.go("playlist", c.ref);
+    else if (c.acao === "music") App.router.go("music");
     else App.router.go("gallery");
   }
 

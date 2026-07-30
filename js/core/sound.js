@@ -13,7 +13,7 @@ App.sound = (function () {
     return ctx;
   }
 
-  function beep(freq, durMs, type) {
+  function beep(freq, durMs, type, peak) {
     var c = ensure();
     if (!c) return;
     var osc = c.createOscillator();
@@ -21,7 +21,7 @@ App.sound = (function () {
     osc.type = type || "square";
     osc.frequency.value = freq;
     gain.gain.setValueAtTime(0.001, c.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.4, c.currentTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(peak || 0.4, c.currentTime + 0.02);
     gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + durMs / 1000);
     osc.connect(gain);
     gain.connect(c.destination);
@@ -37,8 +37,8 @@ App.sound = (function () {
     // Sinais do cronômetro:
     start: function () { beep(880, 500, "square"); },              // início do round (sino)
     warn:  function () { beep(600, 120, "sine"); },                // bipe 10s..4s restantes
-    warnFinal: function () { beep(1000, 160, "square"); },         // bipe 3s, 2s, 1s (mais agudo)
-    end:   function () { beep(440, 700, "square"); },              // fim do round
+    warnFinal: function () { beep(1000, 220, "square", 0.4); },    // bipe dos segundos finais (agudo; pico 0.4 = mesmo dos que tocam na TV)
+    end:   function () { beep(440, 700, "square", 0.4); },         // fim do round (pico 0.4: acima disso a TV silencia a onda quadrada)
     finish: function () { beep(880, 250); setTimeout(function(){ beep(660, 600); }, 300); }
   };
 })();

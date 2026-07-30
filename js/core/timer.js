@@ -7,6 +7,7 @@ App.createTimer = function (config, handlers) {
   // config: { tempoLutaSeg, qtdLutas, descansoSeg, avisoSeg?, prepararSeg? }
   // handlers: { onTick(state), onPhase(state), onCue(tipo), onFinish() }
   var avisoSeg = config.avisoSeg != null ? config.avisoSeg : 10;
+  var avisoFinalSeg = config.avisoFinalSeg != null ? config.avisoFinalSeg : 5;  // últimos segundos com bipe agudo
   var prepararSeg = config.prepararSeg != null ? config.prepararSeg : 10;
 
   var state = {
@@ -40,7 +41,7 @@ App.createTimer = function (config, handlers) {
     // Bipe a cada segundo nos últimos avisoSeg segundos (contagem regressiva audível)
     if (state.remaining <= avisoSeg && state.remaining > 0 && state.remaining !== lastCueSec) {
       lastCueSec = state.remaining;
-      cue(state.remaining <= 3 ? "warnFinal" : "warn");
+      cue(state.remaining <= avisoFinalSeg ? "warnFinal" : "warn");
     }
 
     if (state.remaining <= 0) {

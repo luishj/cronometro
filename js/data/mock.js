@@ -22,27 +22,114 @@ App.mock = {
 
   // Playlists tocadas durante as lutas. Depois de escolher o round, o app
   // pergunta qual playlist usar (ex.: uma só para o treino Kids).
-  // Cada playlist é uma "pasta": coloque os .mp3 na pasta indicada e liste-os
-  // em "faixas". Se um arquivo não existir, o app pula a faixa sem travar.
+  // Cada playlist é uma PASTA em assets/musicas/: para adicionar músicas, solte
+  // os .mp3 na pasta e liste-os em "faixas". Se um arquivo não existir, o app
+  // pula a faixa sem travar. A ordem de reprodução é aleatória (embaralhada).
   playlists: [
-    { id: "geral", nome: "🎵 Geral", faixas: [
-        "assets/musicas/50 Cent - In Da Club.mp3",
-        "assets/musicas/50 Cent - Just A Lil Bit.mp3",
-        "assets/musicas/50 Cent - P.I.M.P..mp3",
-        "assets/musicas/Bill Conti - Gonna Fly Now - Theme From _Rocky_.mp3",
-        "assets/musicas/Body Head Bangerz, Roy Jones Jr., Choppa, Giz, Swellz - Go Hard, Go Home.mp3",
-        "assets/musicas/Body Head Bangerz, Roy Jones Jr., Mr Magic, Choppa - Body Head Anthem.mp3",
-        "assets/musicas/Body Head Bangerz, Roy Jones Jr., Mr Magic, JUVENILE - Don't Start It.mp3",
-        "assets/musicas/Body Head Bangerz, Roy Jones Jr., Mr Magic, Trouble - Can't Be Touched.mp3",
-        "assets/musicas/Dr. Dre, Snoop Dogg - Still D.R.E..mp3",
-        "assets/musicas/Eminem, Joyner Lucas - Lucky You (feat. Joyner Lucas).mp3",
-        "assets/musicas/Eminem, Nate Dogg - Till I Collapse.mp3",
-        "assets/musicas/Marilyn Manson - Sweet Dreams (Are Made Of This).mp3",
-        "assets/musicas/Marilyn Manson - The Beautiful People.mp3",
-        "assets/musicas/Meek Mill, YG, Snoop Dogg - That's My N____ (with Meek Mill, YG & Snoop Dogg).mp3",
-        "assets/musicas/Snoop Dogg, Pharrell Williams - Drop It Like It's Hot.mp3"
+    { id: "rock", nome: "🎸 Rock", faixas: [
+        "assets/musicas/Rock/AC_DC - Highway to Hell.mp3",
+        "assets/musicas/Rock/Aerosmith - Walk This Way.mp3",
+        "assets/musicas/Rock/BLACKWELL, Promoting Sounds - lipstick.mp3",
+        "assets/musicas/Rock/Drowning Pool - Bodies.mp3",
+        "assets/musicas/Rock/Fall Out Boy - Centuries.mp3",
+        "assets/musicas/Rock/Foo Fighters - Learn to Fly.mp3",
+        "assets/musicas/Rock/Foo Fighters - Monkey Wrench.mp3",
+        "assets/musicas/Rock/Gorillaz, De La Soul - Feel Good Inc..mp3",
+        "assets/musicas/Rock/Guns N' Roses - Live And Let Die.mp3",
+        "assets/musicas/Rock/Guns N' Roses - Sweet Child O' Mine.mp3",
+        "assets/musicas/Rock/Halcyon A.D. - Chorus Eternal - Vocal Version.mp3",
+        "assets/musicas/Rock/Linkin Park - Somewhere I Belong.mp3",
+        "assets/musicas/Rock/Linkin Park - The Emptiness Machine.mp3",
+        "assets/musicas/Rock/Muse - Hysteria.mp3",
+        "assets/musicas/Rock/O.N.I - Haunted.mp3",
+        "assets/musicas/Rock/Papa Roach - Last Resort.mp3",
+        "assets/musicas/Rock/Radiohead - Creep.mp3",
+        "assets/musicas/Rock/Red Hot Chili Peppers - Can't Stop.mp3",
+        "assets/musicas/Rock/Red Hot Chili Peppers - Dani California.mp3",
+        "assets/musicas/Rock/Rush - Tom Sawyer.mp3",
+        "assets/musicas/Rock/Survivor - Eye of the Tiger.mp3",
+        "assets/musicas/Rock/Sweet Gorilla - Good Thing.mp3",
+        "assets/musicas/Rock/The Killers - Mr. Brightside.mp3",
+        "assets/musicas/Rock/The Offspring - The Kids Aren't Alright.mp3",
+        "assets/musicas/Rock/Tom Petty and the Heartbreakers - American Girl.mp3",
+        "assets/musicas/Rock/Tomas Chris - ANIMAL.mp3",
+        "assets/musicas/Rock/Tomas Chris - POPSICLE.mp3",
+        "assets/musicas/Rock/Whethan, Waka Flocka Flame, Denzel Curry, BKTHERULA - ROOSTER.mp3",
+        "assets/musicas/Rock/ptasinski, RJ Pasin - life force.mp3"
     ]},
-    { id: "kids", nome: "🧒 Kids", faixas: [] },
+    { id: "hip-hop", nome: "🎤 Hip-hop", faixas: [
+        "assets/musicas/Hip-hop/50 Cent - In Da Club.mp3",
+        "assets/musicas/Hip-hop/50 Cent - Just A Lil Bit.mp3",
+        "assets/musicas/Hip-hop/50 Cent - P.I.M.P..mp3",
+        "assets/musicas/Hip-hop/AC_DC - Back In Black.mp3",
+        "assets/musicas/Hip-hop/AC_DC - Highway to Hell.mp3",
+        "assets/musicas/Hip-hop/AC_DC - T.N.T..mp3",
+        "assets/musicas/Hip-hop/AC_DC - Thunderstruck.mp3",
+        "assets/musicas/Hip-hop/AC_DC - You Shook Me All Night Long.mp3",
+        "assets/musicas/Hip-hop/Bill Conti - Gonna Fly Now - Theme From _Rocky_.mp3",
+        "assets/musicas/Hip-hop/Body Head Bangerz, Roy Jones Jr., Choppa, Giz, Swellz - Go Hard, Go Home.mp3",
+        "assets/musicas/Hip-hop/Body Head Bangerz, Roy Jones Jr., Mr Magic, Choppa - Body Head Anthem.mp3",
+        "assets/musicas/Hip-hop/Body Head Bangerz, Roy Jones Jr., Mr Magic, JUVENILE - Don't Start It.mp3",
+        "assets/musicas/Hip-hop/Body Head Bangerz, Roy Jones Jr., Mr Magic, Trouble - Can't Be Touched.mp3",
+        "assets/musicas/Hip-hop/Deep Purple - Smoke On The Water - Remastered 2012.mp3",
+        "assets/musicas/Hip-hop/Dr. Dre, Snoop Dogg - Still D.R.E..mp3",
+        "assets/musicas/Hip-hop/Eminem, Joyner Lucas - Lucky You (feat. Joyner Lucas).mp3",
+        "assets/musicas/Hip-hop/Eminem, Nate Dogg - Till I Collapse.mp3",
+        "assets/musicas/Hip-hop/Guns N' Roses - Sweet Child O' Mine.mp3",
+        "assets/musicas/Hip-hop/Hollywood Undead - Undead.mp3",
+        "assets/musicas/Hip-hop/Ludwig Göransson - You're a Creed.mp3",
+        "assets/musicas/Hip-hop/Lynyrd Skynyrd - Sweet Home Alabama.mp3",
+        "assets/musicas/Hip-hop/Marilyn Manson - Sweet Dreams (Are Made Of This).mp3",
+        "assets/musicas/Hip-hop/Marilyn Manson - The Beautiful People.mp3",
+        "assets/musicas/Hip-hop/Meek Mill, YG, Snoop Dogg - That's My N____ (with Meek Mill, YG & Snoop Dogg).mp3",
+        "assets/musicas/Hip-hop/Rag'n'Bone Man - Human.mp3",
+        "assets/musicas/Hip-hop/Snoop Dogg, Pharrell Williams - Drop It Like It's Hot.mp3",
+        "assets/musicas/Hip-hop/Survivor - Eye of the Tiger.mp3",
+        "assets/musicas/Hip-hop/The Rolling Stones - (I Can't Get No) Satisfaction - Mono.mp3",
+        "assets/musicas/Hip-hop/Valentine - Take You Back (Street Corner Song From _Rocky_) - From _Rocky_ Soundtrack _ Remastered 2006.mp3"
+    ]},
+    { id: "kids", nome: "🧒 Kids", faixas: [
+        "assets/musicas/kids/BLOX KIDS - Amostradinho.mp3",
+        "assets/musicas/kids/BLOX KIDS - Aprender é Bom Demais.mp3",
+        "assets/musicas/kids/BLOX KIDS - As Frutinhas.mp3",
+        "assets/musicas/kids/Banda De Boca - Biquini de Bolinha Amerelinha.mp3",
+        "assets/musicas/kids/Bob Zoom - Pula Pipoquinha.mp3",
+        "assets/musicas/kids/Bolofofos - Doguito.mp3",
+        "assets/musicas/kids/Bolofofos - Domingo Abacaxi Flamingo.mp3",
+        "assets/musicas/kids/Bolofofos - Funk do Pão de Queijo.mp3",
+        "assets/musicas/kids/Crianças - Mudar Geral.mp3",
+        "assets/musicas/kids/Ivan Parente, Glauco Marques - Quem Dorme É O Leão.mp3",
+        "assets/musicas/kids/Little Cats - Berthassaura Leopoldina.mp3",
+        "assets/musicas/kids/Mundo Bita - Fazendinha.mp3",
+        "assets/musicas/kids/Mundo Bita - Fundo do Mar.mp3",
+        "assets/musicas/kids/Mundo da Lara e mari - Hora de Brincar.mp3",
+        "assets/musicas/kids/Palavra Cantada - Chegou a Hora da Fogueira _ Sonho de Papel _ Capelinha de Melão _ Pula Fogueria Iáiá.mp3",
+        "assets/musicas/kids/Palavra Cantada - Ciranda.mp3",
+        "assets/musicas/kids/Patati Patatá - Comer Comer.mp3",
+        "assets/musicas/kids/Patati Patatá - O Ronco do Vovô.mp3",
+        "assets/musicas/kids/Patati Patatá - Piuí Abacaxi.mp3",
+        "assets/musicas/kids/Patati Patatá - Se Você Quer Sorrir.mp3",
+        "assets/musicas/kids/Patricia Marx - Espelho.mp3",
+        "assets/musicas/kids/Priscilla & Yudi - Carro - Céu.mp3",
+        "assets/musicas/kids/Sandy e Junior - Vamo Pula!.mp3",
+        "assets/musicas/kids/Sophia Valverde, Policoro - Jogo do Contente.mp3",
+        "assets/musicas/kids/Trem Da Alegria - O Elefante E A Formiguinha.mp3",
+        "assets/musicas/kids/Trem Da Alegria, Xuxa - Piuí Abacaxí (feat. Xuxa).mp3"
+    ]},
     { id: "sem-musica", nome: "🔇 Sem música", faixas: [] }
   ]
 };
+
+// Playlist "Geral" = Rock + Hip-hop juntos (a Kids fica de fora).
+// Montada automaticamente a partir das outras pastas e inserida no TOPO da lista,
+// então basta adicionar música em Rock/Hip-hop que ela entra aqui também.
+(function () {
+  var porId = {};
+  App.mock.playlists.forEach(function (p) { porId[p.id] = p; });
+  var geral = {
+    id: "geral",
+    nome: "🎵 Geral",
+    faixas: porId.rock.faixas.concat(porId["hip-hop"].faixas)
+  };
+  App.mock.playlists.unshift(geral);
+})();
